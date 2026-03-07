@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-evaluator"
+version = "0.1.0"
+description = "CLI-first LangGraph evaluator for comparing LLMs."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain>=0.3.0",
+    "langgraph>=0.2.0",
+    "httpx>=0.28.0",
+    "jinja2>=3.1.0",
+    "pydantic>=2.11.0",
+    "pyyaml>=6.0.0",
+    "typer>=0.16.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.0.0",
+]
+
+[project.scripts]
+llm-evaluator = "llm_evaluator.cli:main"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.setuptools.packages.find]
+where = ["src"]
