@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 
 import typer
+from dotenv import load_dotenv
 
 from llm_evaluator.graph.workflow import build_workflow
 
@@ -21,6 +22,7 @@ def callback() -> None:
 @app.command()
 def evaluate(config: Path = typer.Option(..., exists=True, dir_okay=False, readable=True)) -> None:
     """Run an evaluation."""
+    load_dotenv(dotenv_path=Path.cwd() / ".env")
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
         raise ValueError("OPENROUTER_API_KEY is required.")

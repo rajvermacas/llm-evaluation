@@ -5,7 +5,7 @@ CLI-first LangGraph evaluation tool for benchmarking OpenRouter models with a te
 ## Requirements
 
 - Python 3.12
-- `OPENROUTER_API_KEY` set in the environment
+- `OPENROUTER_API_KEY` set in the environment or a local `.env` file
 
 ## Configuration
 
@@ -21,13 +21,18 @@ benchmark_case_count: 3
 output_dir: reports/sample-run
 ```
 
-See [examples/sample-config.yaml](/workspaces/llm-evaluation/.devcontainer/examples/sample-config.yaml).
+See [examples/sample-config.yaml](/workspaces/llm-evaluation/examples/sample-config.yaml).
+
+Create a local `.env` from [`.env.example`](/workspaces/llm-evaluation/.env.example):
+
+```bash
+cp .env.example .env
+```
 
 ## Run Locally
 
 ```bash
-cd /workspaces/llm-evaluation/.devcontainer
-export OPENROUTER_API_KEY=your-api-key
+cd /workspaces/llm-evaluation
 PYTHONPATH=src python -m llm_evaluator.cli evaluate --config examples/sample-config.yaml
 ```
 

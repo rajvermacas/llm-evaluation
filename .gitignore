@@ -10,3 +10,4 @@ build/
 reports/
 artifacts/
 *.egg-info
+.env
