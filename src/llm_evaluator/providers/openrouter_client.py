@@ -13,6 +13,21 @@ from llm_evaluator.domain.results import JudgmentResult
 LOGGER = logging.getLogger(__name__)
 
 
+def _build_benchmark_generation_content(
+    prompt: str,
+    problem_statement: str,
+    benchmark_case_count: int,
+) -> str:
+    """Build the teacher benchmark-generation message content."""
+    return (
+        f"{prompt}\n\n"
+        f"Problem Statement:\n{problem_statement}\n\n"
+        f"Generate exactly {benchmark_case_count} cases.\n"
+        "Every field value must be a JSON string.\n"
+        'Use string literals like "true" or "false", never bare booleans.'
+    )
+
+
 class OpenRouterClient:
     """Minimal OpenRouter client wrapper."""
 
@@ -34,14 +49,18 @@ class OpenRouterClient:
         prompt: str,
     ) -> tuple[dict[str, Any], Decimal]:
         """Generate benchmark cases using the teacher model."""
-        content = (
-            f"{prompt}\n\n"
-            f"Problem Statement:\n{problem_statement}\n\n"
-            f"Generate exactly {benchmark_case_count} cases."
-        )
         return self._request_json(
             model=teacher_model,
-            messages=[{"role": "user", "content": content}],
+            messages=[
+                {
+                    "role": "user",
+                    "content": _build_benchmark_generation_content(
+                        prompt=prompt,
+                        problem_statement=problem_statement,
+                        benchmark_case_count=benchmark_case_count,
+                    ),
+                }
+            ],
         )
 
     def run_candidate_prompt(
@@ -116,7 +135,18 @@ class OpenRouterClient:
                 headers=self._build_headers(),
                 json=request_payload,
             )
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            LOGGER.error(
+                "OpenRouter request failed: status=%s url=%s body=%s",
+                exc.response.status_code,
+                exc.request.url,
+                exc.response.text,
+            )
+            raise ValueError(
+                f"OpenRouter request failed with status {exc.response.status_code}: {exc.response.text}"
+            ) from exc
         payload = response.json()
         return payload, self._extract_cost(payload)
 

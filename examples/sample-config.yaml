@@ -1,6 +1,5 @@
-teacher_model: minimax/minimax-m2.5:free
+teacher_model: nvidia/nemotron-3-super-120b-a12b:free
 candidate_models:
-  - nvidia/nemotron-3-super-120b-a12b:free
   - nvidia/nemotron-3-nano-30b-a3b:free
 problem_statement: given a news find out if the news is a price sensitive news in the context of stocks
 benchmark_case_count: 3
