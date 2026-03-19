@@ -1,0 +1,5 @@
+I want to build an agentic solution which should take a problem statement from me and decide which ai llm model to use.
+Lets say I have openrouter as the lllm provider and i configure certain llms to evaluate.
+If I give a prompt to the solution saying "Given a news i want to find out if its a price sensitve news or non price sensitive news"
+then the solution should write test cases run the llms configured test the output against the expected output and it should tell which model is the optimum to use. Note the prompt I just above gave was just an example. It can be anything.
+The most optmized model to use is the most cost effective one with highest test cases getting passed.
