@@ -178,3 +178,16 @@ The report must also show, for each model:
 - Non-determinism in generation and judging may affect reproducibility
 
 These risks should be surfaced in the generated report so the recommendation is interpreted correctly.
+
+## Operational Notes
+
+- Required environment variable: `OPENROUTER_API_KEY`
+- Required run configuration fields: `teacher_model`, `candidate_models`, `problem_statement`, `benchmark_case_count`, `output_dir`
+- Expected output artifacts per run: `config.yaml`, `benchmark.json`, `results.json`, `report.md`
+- Local run command:
+
+```bash
+cd /workspaces/llm-evaluation/.devcontainer
+export OPENROUTER_API_KEY=your-api-key
+PYTHONPATH=src python -m llm_evaluator.cli evaluate --config examples/sample-config.yaml
+```

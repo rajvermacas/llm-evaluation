@@ -1,6 +1,7 @@
 """Configuration domain models."""
 
 import logging
+from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -15,6 +16,8 @@ class RunConfig(BaseModel):
     teacher_model: str = Field(min_length=1)
     candidate_models: list[str]
     problem_statement: str = Field(min_length=1)
+    benchmark_case_count: int = Field(ge=1)
+    output_dir: Path
 
     @field_validator("candidate_models")
     @classmethod

@@ -1,0 +1,7 @@
+teacher_model: openai/gpt-4o-mini
+candidate_models:
+  - openai/gpt-4o-mini
+  - anthropic/claude-3.5-haiku
+problem_statement: Classify each prompt according to the requested label.
+benchmark_case_count: 3
+output_dir: reports/sample-run

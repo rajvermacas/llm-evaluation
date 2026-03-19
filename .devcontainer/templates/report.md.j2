@@ -1,0 +1,29 @@
+# Evaluation Report
+
+Recommended Model: {{ recommended_model }}
+
+## Model Ranking
+{% for aggregate in model_aggregates %}
+- {{ aggregate.model_id }}: pass_rate={{ aggregate.pass_rate }}, total_cost={{ aggregate.total_cost }}
+{% endfor %}
+
+## Case Results
+{% for case in benchmark_cases %}
+### {{ case.id }}
+Input Prompt: {{ case.input_prompt }}
+
+Expected Output: {{ case.expected_output }}
+
+Evaluation Criteria: {{ case.evaluation_criteria }}
+
+{% for result in candidate_results if result.benchmark_case_id == case.id %}
+Candidate Model: {{ result.model_id }}
+
+Candidate Output: {{ result.raw_output }}
+
+Passed: {{ result.judgment.passed }}
+
+Rationale: {{ result.judgment.rationale }}
+
+{% endfor %}
+{% endfor %}
