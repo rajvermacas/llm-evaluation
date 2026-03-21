@@ -53,5 +53,7 @@ def test_evaluate_command_writes_reports(tmp_path: Path, monkeypatch) -> None:
     result = runner.invoke(app, ["evaluate", "--config", str(config_path)])
 
     assert result.exit_code == 0
+    assert "Evaluate command invoked with config=" in result.stdout
+    assert "Wrote evaluation artifacts to" in result.stdout
     assert (tmp_path / "artifacts" / "report.md").exists()
     assert (tmp_path / "artifacts" / "results.json").exists()

@@ -25,10 +25,12 @@ def load_run_context(state: EvaluatorState) -> EvaluatorState:
     """Load config and initialize the API client."""
     from llm_evaluator.providers.openrouter_client import OpenRouterClient
 
+    LOGGER.info("Loading run context from config_path=%s.", state["config_path"])
     run_config = load_config(state["config_path"])
     output_dir = run_config.output_dir
     output_dir.mkdir(parents=True, exist_ok=True)
     shutil.copy2(state["config_path"], output_dir / "config.yaml")
+    LOGGER.info("Run context ready with output_dir=%s.", output_dir)
     return {
         "run_config": run_config,
         "openrouter_client": OpenRouterClient(api_key=state["api_key"]),
@@ -39,6 +41,11 @@ def load_run_context(state: EvaluatorState) -> EvaluatorState:
 def generate_benchmark_with_teacher(state: EvaluatorState) -> EvaluatorState:
     """Generate benchmark cases using the teacher model."""
     run_config = state["run_config"]
+    LOGGER.info(
+        "Generating %s benchmark cases with teacher_model=%s.",
+        run_config.benchmark_case_count,
+        run_config.teacher_model,
+    )
     payload, _cost = state["openrouter_client"].generate_benchmark(
         teacher_model=run_config.teacher_model,
         problem_statement=run_config.problem_statement,
@@ -59,6 +66,11 @@ def run_candidate_models(state: EvaluatorState) -> EvaluatorState:
     outputs: list[CandidateOutput] = []
     run_config = state["run_config"]
     client = state["openrouter_client"]
+    LOGGER.info(
+        "Running %s candidate models across %s benchmark cases.",
+        len(run_config.candidate_models),
+        len(state["benchmark_cases"]),
+    )
     for case in state["benchmark_cases"]:
         for model_id in run_config.candidate_models:
             raw_output, total_cost = client.run_candidate_prompt(model_id=model_id, case=case)
@@ -79,6 +91,11 @@ def judge_candidate_outputs(state: EvaluatorState) -> EvaluatorState:
     run_config = state["run_config"]
     client = state["openrouter_client"]
     results: list[CandidateResult] = []
+    LOGGER.info(
+        "Judging %s candidate outputs with teacher_model=%s.",
+        len(state["candidate_outputs"]),
+        run_config.teacher_model,
+    )
     for output in state["candidate_outputs"]:
         case = benchmark_by_id[output.benchmark_case_id]
         judgment, judgment_cost = client.judge_candidate_output(
@@ -102,6 +119,7 @@ def judge_candidate_outputs(state: EvaluatorState) -> EvaluatorState:
 def aggregate_scores_and_costs(state: EvaluatorState) -> EvaluatorState:
     """Aggregate results at the model level and choose the recommendation."""
     aggregates_by_model: dict[str, dict[str, object]] = {}
+    LOGGER.info("Aggregating %s candidate results.", len(state["candidate_results"]))
     for result in state["candidate_results"]:
         bucket = aggregates_by_model.setdefault(
             result.model_id,

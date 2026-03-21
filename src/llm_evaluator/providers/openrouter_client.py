@@ -24,7 +24,9 @@ def _build_benchmark_generation_content(
         f"Problem Statement:\n{problem_statement}\n\n"
         f"Generate exactly {benchmark_case_count} cases.\n"
         "Every field value must be a JSON string.\n"
-        'Use string literals like "true" or "false", never bare booleans.'
+        "expected_output must be a concise natural-language reference answer.\n"
+        "Do not reduce expected_output to bare booleans or exact-match labels unless the ideal answer is genuinely that short.\n"
+        "evaluation_criteria must require semantic evaluation, not exact string matching."
     )
 
 
@@ -86,7 +88,7 @@ class OpenRouterClient:
         content = (
             f"{prompt}\n\n"
             f"Input Prompt:\n{case.input_prompt}\n\n"
-            f"Expected Output:\n{case.expected_output}\n\n"
+            f"Reference Answer:\n{case.expected_output}\n\n"
             f"Evaluation Criteria:\n{case.evaluation_criteria}\n\n"
             f"Candidate Output:\n{candidate_output}"
         )
