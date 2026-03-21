@@ -9,6 +9,7 @@ import httpx
 
 from llm_evaluator.domain.benchmark import BenchmarkCase
 from llm_evaluator.domain.results import JudgmentResult
+from llm_evaluator.prompts.generate_benchmark import BENCHMARK_CASE_REQUIREMENTS
 
 LOGGER = logging.getLogger(__name__)
 
@@ -23,10 +24,7 @@ def _build_benchmark_generation_content(
         f"{prompt}\n\n"
         f"Problem Statement:\n{problem_statement}\n\n"
         f"Generate exactly {benchmark_case_count} cases.\n"
-        "Every field value must be a JSON string.\n"
-        "expected_output must be a concise natural-language reference answer.\n"
-        "Do not reduce expected_output to bare booleans or exact-match labels unless the ideal answer is genuinely that short.\n"
-        "evaluation_criteria must require semantic evaluation, not exact string matching."
+        f"{BENCHMARK_CASE_REQUIREMENTS}"
     )
 
 

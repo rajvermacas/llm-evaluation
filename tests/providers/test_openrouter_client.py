@@ -75,8 +75,11 @@ def test_generate_benchmark_uses_reference_answer_prompt(monkeypatch) -> None:
     assert isinstance(messages, list)
     message = messages[0]["content"]
     assert 'Every field value must be a JSON string.' in message
-    assert "expected_output must be a concise natural-language reference answer." in message
-    assert "evaluation_criteria must require semantic evaluation, not exact string matching." in message
+    assert "input_prompt must be a fully self-contained instruction for the candidate model." in message
+    assert "input_prompt must be derived from the provided problem statement" in message
+    assert "input_prompt must specify the expected response format" in message
+    assert "expected_output must be a concise natural-language reference answer" in message
+    assert "evaluation_criteria must instruct the judge to evaluate semantic correctness" in message
 
 
 def test_judge_candidate_output_uses_semantic_evaluation_prompt(monkeypatch) -> None:

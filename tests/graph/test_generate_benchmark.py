@@ -30,6 +30,27 @@ def test_build_benchmark_cases_returns_requested_count() -> None:
     cases = build_benchmark_cases(fake_teacher_response, expected_count=3)
 
     assert len(cases) == 3
+    assert cases[0].input_prompt == "Prompt 1"
+
+
+def test_build_benchmark_cases_accepts_self_contained_input_prompt() -> None:
+    fake_teacher_response = {
+        "cases": [
+            {
+                "id": "case-1",
+                "input_prompt": (
+                    "Determine the requested classification for the following text and provide a brief reason.\n"
+                    "Text:\nApple reported record earnings."
+                ),
+                "expected_output": "The text should receive the positive classification because it reports earnings.",
+                "evaluation_criteria": "Pass answers that give the right classification with a brief reason.",
+            }
+        ]
+    }
+
+    cases = build_benchmark_cases(fake_teacher_response, expected_count=1)
+
+    assert cases[0].input_prompt.startswith("Determine the requested classification")
 
 
 def test_build_benchmark_cases_rejects_non_string_expected_output() -> None:
