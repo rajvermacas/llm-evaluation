@@ -1,0 +1,101 @@
+{
+  "recommended_model": "nvidia/nemotron-3-nano-30b-a3b:free",
+  "benchmark_cases": [
+    {
+      "id": "1",
+      "input_prompt": "Given the numbers 7 and 4, perform basic addition, subtraction, multiplication, and division. Output the results in the following format: 'Addition: <result>, Subtraction: <result>, Multiplication: <result>, Division: <result>'. Provide a brief explanation of how each result was obtained.",
+      "expected_output": "Addition: 11, Subtraction: 3, Multiplication: 28, Division: 1.75. Explanation: 7+4=11, 7-4=3, 7*4=28, 7/4=1.75.",
+      "evaluation_criteria": "Judge should verify that the model's response correctly computes addition, subtraction, multiplication, and division of the given numbers and that the explanation accurately describes each step. Minor variations in wording or formatting are acceptable as long as the numeric results are correct and the meaning is preserved."
+    },
+    {
+      "id": "2",
+      "input_prompt": "Given the numbers 12 and 3, perform basic addition, subtraction, multiplication, and division. Output the results in the following format: 'Addition: <result>, Subtraction: <result>, Multiplication: <result>, Division: <result>'. Provide a brief explanation of how each result was obtained.",
+      "expected_output": "Addition: 15, Subtraction: 9, Multiplication: 36, Division: 4.0. Explanation: 12+3=15, 12-3=9, 12*3=36, 12/3=4.0.",
+      "evaluation_criteria": "Judge should verify that the model's response correctly computes addition, subtraction, multiplication, and division of the given numbers and that the explanation accurately describes each step. Minor variations in wording or formatting are acceptable as long as the numeric results are correct and the meaning is preserved."
+    },
+    {
+      "id": "3",
+      "input_prompt": "Given the numbers 9 and 6, perform basic addition, subtraction, multiplication, and division. Output the results in the following format: 'Addition: <result>, Subtraction: <result>, Multiplication: <result>, Division: <result>'. Provide a brief explanation of how each result was obtained.",
+      "expected_output": "Addition: 15, Subtraction: 3, Multiplication: 54, Division: 1.5. Explanation: 9+6=15, 9-6=3, 9*6=54, 9/6=1.5.",
+      "evaluation_criteria": "Judge should verify that the model's response correctly computes addition, subtraction, multiplication, and division of the given numbers and that the explanation accurately describes each step. Minor variations in wording or formatting are acceptable as long as the numeric results are correct and the meaning is preserved."
+    }
+  ],
+  "candidate_results": [
+    {
+      "model_id": "nvidia/nemotron-3-nano-30b-a3b:free",
+      "benchmark_case_id": "1",
+      "raw_output": "Addition: 11, Subtraction: 3, Multiplication: 28, Division: 1.75  \n\n**Explanation**  \n- **Addition:** 7\u202f+\u202f4 = 11 \u2013 we sum the two numbers.  \n- **Subtraction:** 7\u202f-\u202f4 = 3 \u2013 we subtract the smaller number from the larger one.  \n- **Multiplication:** 7\u202f\u00d7\u202f4 = 28 \u2013 we multiply the numbers together.  \n- **Division:** 7 \u00f7 4 = 1.75 \u2013 we divide 7 by 4, yielding a decimal result.",
+      "total_cost": "0",
+      "judgment": {
+        "passed": true,
+        "rationale": "The candidate output correctly computes addition (11), subtraction (3), multiplication (28), and division (1.75) for the numbers 7 and 4. The explanation accurately describes each operation, matching the required meaning despite slight formatting differences."
+      }
+    },
+    {
+      "model_id": "openai/gpt-oss-120b:free",
+      "benchmark_case_id": "1",
+      "raw_output": "**Addition:** 11, **Subtraction:** 3, **Multiplication:** 28, **Division:** 1.75  \n\n**Explanation:**  \n- *Addition* \u2013 Adding the two numbers (7\u202f+\u202f4) gives 11.  \n- *Subtraction* \u2013 Subtracting the second number from the first (7\u202f\u2212\u202f4) yields 3.  \n- *Multiplication* \u2013 Multiplying them (7\u202f\u00d7\u202f4) results in 28.  \n- *Division* \u2013 Dividing the first number by the second (7\u202f\u00f7\u202f4) produces 1.75.",
+      "total_cost": "0",
+      "judgment": {
+        "passed": true,
+        "rationale": "The candidate output correctly computes addition (11), subtraction (3), multiplication (28), and division (1.75) for the numbers 7 and 4. The explanation accurately describes each operation, matching the expected meaning despite slight formatting differences (bold/italics). Thus, the response satisfies semantic correctness, relevance, and completeness."
+      }
+    },
+    {
+      "model_id": "nvidia/nemotron-3-nano-30b-a3b:free",
+      "benchmark_case_id": "2",
+      "raw_output": "Addition: 15, Subtraction: 9, Multiplication: 36, Division: 4\n\nExplanation:  \n- Addition: 12 + 3 = 15  \n- Subtraction: 12 - 3 = 9  \n- Multiplication: 12 \u00d7 3 = 36  \n- Division: 12 \u00f7 3 = 4 (integer division results in 4, as 3 fits exactly into 12 four times)",
+      "total_cost": "0",
+      "judgment": {
+        "passed": true,
+        "rationale": "All operations computed correctly; division result 4 is mathematically equivalent to 4.0; explanation matches steps."
+      }
+    },
+    {
+      "model_id": "openai/gpt-oss-120b:free",
+      "benchmark_case_id": "2",
+      "raw_output": "**Addition:** 15, **Subtraction:** 9, **Multiplication:** 36, **Division:** 4  \n\n**Explanation:**  \n- *Addition* \u2013 Adding the two numbers (12\u202f+\u202f3) gives 15.  \n- *Subtraction* \u2013 Subtracting the second number from the first (12\u202f\u2212\u202f3) yields 9.  \n- *Multiplication* \u2013 Multiplying them (12\u202f\u00d7\u202f3) results in 36.  \n- *Division* \u2013 Dividing the first by the second (12\u202f\u00f7\u202f3) produces 4.",
+      "total_cost": "0",
+      "judgment": {
+        "passed": true,
+        "rationale": "The candidate output correctly computes addition (15), subtraction (9), multiplication (36), and division (4, which is equivalent to 4.0). The explanation accurately describes each operation. Although the formatting differs (using bold markers and bullet points) and the division result is presented as an integer rather than a float, the numeric values are correct and the meaning is preserved, satisfying the evaluation criteria."
+      }
+    },
+    {
+      "model_id": "nvidia/nemotron-3-nano-30b-a3b:free",
+      "benchmark_case_id": "3",
+      "raw_output": "Addition: 15, Subtraction: 3, Multiplication: 54, Division: 1.5  \n\n**Explanation**  \n- **Addition:** 9\u202f+\u202f6 = 15.  \n- **Subtraction:** 9\u202f\u2212\u202f6 = 3.  \n- **Multiplication:** 9\u202f\u00d7\u202f6 = 54.  \n- **Division:** 9\u202f\u00f7\u202f6 = 1.5 (or 3/2 as a fraction).",
+      "total_cost": "0",
+      "judgment": {
+        "passed": true,
+        "rationale": "The candidate output provides correct numeric results for addition (15), subtraction (3), multiplication (54), and division (1.5). The explanation correctly describes each operation (9+6=15, 9-6=3, 9\u00d76=54, 9\u00f76=1.5) and includes an additional equivalent fraction, which does not affect correctness. The format matches the required structure, and minor variations in wording are acceptable. Therefore, the output satisfies the evaluation criteria."
+      }
+    },
+    {
+      "model_id": "openai/gpt-oss-120b:free",
+      "benchmark_case_id": "3",
+      "raw_output": "**Addition:** 15, **Subtraction:** 3, **Multiplication:** 54, **Division:** 1.5  \n\n**Explanation:**  \n- *Addition* \u2013 Adding the two numbers:\u202f9\u202f+\u202f6\u202f=\u202f15.  \n- *Subtraction* \u2013 Subtracting the second number from the first:\u202f9\u202f\u2212\u202f6\u202f=\u202f3.  \n- *Multiplication* \u2013 Multiplying the numbers:\u202f9\u202f\u00d7\u202f6\u202f=\u202f54.  \n- *Division* \u2013 Dividing the first number by the second:\u202f9\u202f\u00f7\u202f6\u202f=\u202f1.5.",
+      "total_cost": "0",
+      "judgment": {
+        "passed": true,
+        "rationale": "The candidate output correctly computes addition (15), subtraction (3), multiplication (54), and division (1.5) for the numbers 9 and 6. The explanation accurately describes each operation, matching the expected meaning despite differences in formatting (use of bold markup and bullet points)."
+      }
+    }
+  ],
+  "model_aggregates": [
+    {
+      "model_id": "nvidia/nemotron-3-nano-30b-a3b:free",
+      "passed": 3,
+      "failed": 0,
+      "pass_rate": "1",
+      "total_cost": "0"
+    },
+    {
+      "model_id": "openai/gpt-oss-120b:free",
+      "passed": 3,
+      "failed": 0,
+      "pass_rate": "1",
+      "total_cost": "0"
+    }
+  ]
+}
