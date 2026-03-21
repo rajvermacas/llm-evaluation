@@ -1,7 +1,6 @@
 teacher_model: nvidia/nemotron-3-super-120b-a12b:free
 candidate_models:
   - nvidia/nemotron-3-nano-30b-a3b:free
-  - qwen/qwen3-next-80b-a3b-instruct:free
   - openai/gpt-oss-120b:free
 problem_statement: Basic addition, multiplication, division and subtraction should be done give two or more numbers
 benchmark_case_count: 3
