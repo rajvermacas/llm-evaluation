@@ -11,3 +11,4 @@ reports/
 artifacts/
 *.egg-info
 .env
+/reports/sample_runs/

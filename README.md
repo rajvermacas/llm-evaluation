@@ -19,7 +19,7 @@ candidate_models:
   - anthropic/claude-3.5-haiku
 problem_statement: Classify each prompt according to the requested label.
 benchmark_case_count: 3
-output_dir: reports/sample-run
+output_dir: reports/sample-runs
 ```
 
 See [examples/sample-config.yaml](/workspaces/llm-evaluation/examples/sample-config.yaml).
@@ -48,7 +48,9 @@ uv run pytest
 
 ## Artifacts
 
-Each run writes these files into `output_dir`:
+Each run creates a timestamped child directory in `output_dir` using IST, for example `2026-03-21_08-45-12_IST`.
+
+Each timestamped run directory contains:
 
 - `config.yaml`
 - `benchmark.json`

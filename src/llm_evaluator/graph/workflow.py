@@ -17,6 +17,7 @@ from llm_evaluator.reports.write_json import write_json_report
 from llm_evaluator.reports.write_markdown import render_report
 from llm_evaluator.services.aggregation import rank_models
 from llm_evaluator.services.config_loader import load_config
+from llm_evaluator.services.output_paths import create_timestamped_output_dir
 
 LOGGER = logging.getLogger(__name__)
 
@@ -27,8 +28,7 @@ def load_run_context(state: EvaluatorState) -> EvaluatorState:
 
     LOGGER.info("Loading run context from config_path=%s.", state["config_path"])
     run_config = load_config(state["config_path"])
-    output_dir = run_config.output_dir
-    output_dir.mkdir(parents=True, exist_ok=True)
+    output_dir = create_timestamped_output_dir(run_config.output_dir)
     shutil.copy2(state["config_path"], output_dir / "config.yaml")
     LOGGER.info("Run context ready with output_dir=%s.", output_dir)
     return {

@@ -55,5 +55,13 @@ def test_evaluate_command_writes_reports(tmp_path: Path, monkeypatch) -> None:
     assert result.exit_code == 0
     assert "Evaluate command invoked with config=" in result.stdout
     assert "Wrote evaluation artifacts to" in result.stdout
-    assert (tmp_path / "artifacts" / "report.md").exists()
-    assert (tmp_path / "artifacts" / "results.json").exists()
+    run_directories = [path for path in (tmp_path / "artifacts").iterdir() if path.is_dir()]
+
+    assert len(run_directories) == 1
+
+    output_dir = run_directories[0]
+    assert output_dir.name.endswith("_IST")
+    assert (output_dir / "config.yaml").exists()
+    assert (output_dir / "benchmark.json").exists()
+    assert (output_dir / "report.md").exists()
+    assert (output_dir / "results.json").exists()
